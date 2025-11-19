@@ -47,8 +47,7 @@ const App: React.FC = () => {
   const [showTutorial, setShowTutorial] = useState(false);
   const [showSurfaceAnim, setShowSurfaceAnim] = useState(false);
   const [maxDepthThisRun, setMaxDepthThisRun] = useState(0);
-  const [useAiAppraisal, setUseAiAppraisal] = useState(false);
-
+  
   // Action State
   const [isBusy, setIsBusy] = useState(false);
   const [miningTarget, setMiningTarget] = useState<{x: number, y: number} | null>(null);
@@ -173,7 +172,7 @@ const App: React.FC = () => {
     setAppraisal("正在分析货物..."); 
     setIsShopOpen(true);
     if (stats.inventory.length > 0) {
-       getMineralAppraisal(stats.inventory, useAiAppraisal).then(text => setAppraisal(text));
+       getMineralAppraisal(stats.inventory).then(text => setAppraisal(text));
     } else {
        setAppraisal("没有可出售的物品。");
     }
@@ -428,7 +427,7 @@ const App: React.FC = () => {
     } else {
       audioService.playMiningHit(); 
     }
-  }, [grid, playerPos, stats, isShopOpen, isElevatorOpen, isGameOver, gameStarted, showTutorial, isBusy, showSurfaceAnim, useAiAppraisal]);
+  }, [grid, playerPos, stats, isShopOpen, isElevatorOpen, isGameOver, gameStarted, showTutorial, isBusy, showSurfaceAnim]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -573,8 +572,6 @@ const App: React.FC = () => {
           onSell={handleSell}
           onUpgrade={handleUpgrade}
           appraisalText={appraisal}
-          useAiAppraisal={useAiAppraisal}
-          onToggleAi={setUseAiAppraisal}
         />
       )}
 

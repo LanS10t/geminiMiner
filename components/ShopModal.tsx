@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { PlayerStats, UpgradeType, QualityTier } from '../types';
 import { UPGRADES } from '../constants';
-import { Pickaxe, Battery, Briefcase, X, ArrowUpCircle, Sparkles, Eye, Bot, ToggleLeft, ToggleRight, Zap, Grip } from 'lucide-react';
+import { Pickaxe, Battery, Briefcase, X, ArrowUpCircle, Sparkles, Eye, Bot, Zap, Grip } from 'lucide-react';
 import { MineralIcon } from './MineralIcon';
 import { audioService } from '../services/audioService';
 
@@ -12,11 +12,9 @@ interface ShopModalProps {
   onSell: () => void;
   onUpgrade: (type: UpgradeType, level: number) => void;
   appraisalText: string;
-  useAiAppraisal: boolean;
-  onToggleAi: (value: boolean) => void;
 }
 
-export const ShopModal: React.FC<ShopModalProps> = ({ stats, onClose, onSell, onUpgrade, appraisalText, useAiAppraisal, onToggleAi }) => {
+export const ShopModal: React.FC<ShopModalProps> = ({ stats, onClose, onSell, onUpgrade, appraisalText }) => {
   
   const handleSell = () => {
     if (stats.inventory.length > 0) {
@@ -159,19 +157,10 @@ export const ShopModal: React.FC<ShopModalProps> = ({ stats, onClose, onSell, on
               {stats.inventory.length > 0 && (
                 <div className="bg-black/20 p-3 rounded border border-white/10 mt-2 flex items-start gap-3">
                    <div className="p-2 bg-gray-800 rounded-full">
-                     <Bot size={20} className={useAiAppraisal ? "text-sky-400" : "text-gray-500"} />
+                     <Bot size={20} className="text-sky-400" />
                    </div>
                    <div className="flex-1">
                      <p className="text-yellow-400 text-sm italic mb-2">"{appraisalText}"</p>
-                     
-                     {/* AI Toggle Switch */}
-                     <button 
-                       onClick={() => onToggleAi(!useAiAppraisal)}
-                       className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
-                     >
-                       {useAiAppraisal ? <ToggleRight size={24} className="text-sky-500"/> : <ToggleLeft size={24} className="text-gray-600"/>}
-                       <span>{useAiAppraisal ? "Gemini AI 鉴定已启用" : "关闭 API 鉴定 (使用规则)"}</span>
-                     </button>
                    </div>
                 </div>
               )}
